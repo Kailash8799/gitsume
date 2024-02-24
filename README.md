@@ -53,4 +53,6 @@ npm run dev
 
 ## Contributors
 
-[https://github.com/Nilesh9106](Nilesh9106)
+<a href="https://github.com/Nilesh9106/gitsume/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Nilesh9106/gitsume" />
+</a>
