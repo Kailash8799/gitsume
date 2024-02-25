@@ -2,7 +2,6 @@
 import useMyStore from '@/utils/context'
 import { Repo, User } from '@/utils/types'
 import { Button, Spinner } from '@nextui-org/react'
-import jsPDF from 'jspdf'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
