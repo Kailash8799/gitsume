@@ -9,6 +9,7 @@ export interface Repo {
     topics: string[];
     created_at: string;
     allLanguages: string[];
+    checked: boolean;
 }
 
 export interface UserExperience {
