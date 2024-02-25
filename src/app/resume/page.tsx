@@ -106,17 +106,19 @@ const generateResumeTemplate = (user: User, projects: Repo[]) => {
                     ${user.skills.map(skill => `<li class="list-item">${skill}</li>`).join('')}
                 </ul>
             </div>
-            <div class="section">
-                <h2 class="section-title">Experience</h2>
-                ${user.experiences.map(experience => `
-                    <div class="subsection">
-                        <h3 class="subsection-title">${experience.title}</h3>
-                        <p>${experience.company} | ${experience.location}</p>
-                        <p>${new Date(experience.date_range.split(',')[0]).getFullYear()} - ${experience.date_range.split(',')[1] !== "" ? new Date(experience.date_range.split(',')[1]).getFullYear() : "present"}</p>
-                        <p>${experience.description}</p>
+            ${user.experiences?.length > 0 ? `
+                    <div class="section">
+                        <h2 class="section-title">Experience</h2>
+                        ${user.experiences.map(experience => `
+                            <div class="subsection">
+                                <h3 class="subsection-title">${experience.title}</h3>
+                                <p>${experience.company} | ${experience.location}</p>
+                                <p>${new Date(experience.date_range.split(',')[0]).getFullYear()} - ${experience.date_range.split(',')[1] !== "" ? new Date(experience.date_range.split(',')[1]).getFullYear() : "present"}</p>
+                                <p>${experience.description}</p>
+                            </div>
+                        `).join('')}
                     </div>
-                `).join('')}
-            </div>
+            ` : ""}
             <div class="section">
                 <h2 class="section-title">Education</h2>
                 ${user.education.map(edu => `
@@ -124,7 +126,7 @@ const generateResumeTemplate = (user: User, projects: Repo[]) => {
                         <h3 class="subsection-title">${edu.school}</h3>
                         <p>${edu.degree} - ${edu.major}</p>
                         <p>${new Date(edu.date_range.split(',')[0]).getFullYear()} - ${edu.date_range.split(',')[1] !== "" ? new Date(edu.date_range.split(',')[1]).getFullYear() : "present"}</p>
-                        <p>${edu.description}</p>
+                        <p>${edu.description ?? ""}</p>
                     </div>
                 `).join('')}
             </div>
@@ -135,7 +137,7 @@ const generateResumeTemplate = (user: User, projects: Repo[]) => {
                         <a href="${project.html_url}">
                         <h3 class="project-title">${project.name}</h3>
                         </a>
-                        <p class="project-description">${project.description}</p>
+                        <p class="project-description">${project.description ?? ""}</p>
                         <p class="project-meta">Language: ${project.language}</p>
                         <p class="project-meta">Stars: ${project.stargazers_count}</p>
                         <p class="project-meta">Created at: ${new Date(project.created_at).getFullYear()}</p>
