@@ -1,9 +1,21 @@
-import Image from "next/image";
+import Container from "@/components/Container";
+import Features from "@/components/Features";
+import HeroSection from "@/components/HeroSection";
 
-export default function Home() {
+const Home = () => {
   return (
-    <>
-      <h1>Home</h1>
-    </>
+    <main className="space-y-40 mb-40">
+      <Container>
+        <HeroSection />
+        <Features />
+      </Container>
+
+      {/* <Stats /> */}
+      {/* <Testimonials /> */}
+      {/* <CallToAction /> */}
+      {/* <Blog /> */}
+    </main>
   );
-}
+};
+
+export default Home;
