@@ -22,25 +22,24 @@ export default function CreateResume() {
   const User = useMyStore((state) => state.user);
   const Repos = useMyStore((state) => state.repos);
   const setUser = useMyStore((state) => state.setUser);
+  const setRepos = useMyStore((state) => state.setRepos);
   const [phase, setPhase] = useState(1);
-  const [reposWithCheck, setReposWithCheck] = useState(
-    Repos.map((repo) => ({ repo, checked: false }))
-  );
-  const [schoolname, setschoolname] = useState("");
-  const [degree, setdegree] = useState("");
-  const [major, setmajor] = useState("");
-  const [startdate, setstartdate] = useState("");
-  const [enddate, setenddate] = useState("");
-  const [desc, setdesc] = useState("");
+  const [reposWithCheck, setReposWithCheck] = useState(Repos);
+  const [schoolName, setSchoolName] = useState("");
+  const [degree, setDegree] = useState("");
+  const [major, setMajor] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [desc, setDesc] = useState("");
 
-  const [jobtitle, setjobtitle] = useState("");
-  const [companyname, setcompanyname] = useState("");
-  const [location, setlocation] = useState("");
-  const [jobstartdate, setjobstartdate] = useState("");
-  const [jobenddate, setjobenddate] = useState("");
-  const [jobdesc, setjobdesc] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [location, setLocation] = useState("");
+  const [jobStartDate, setJobStartDate] = useState("");
+  const [jobEndDate, setJobEndDate] = useState("");
+  const [jobDesc, setJobDesc] = useState("");
 
-  const [skill, setskill] = useState("");
+  const [skill, setSkill] = useState("");
 
   const router = useRouter();
 
@@ -51,13 +50,13 @@ export default function CreateResume() {
   }, [User, router]);
 
   const setEduction = () => {
-    if (schoolname.length < 1 || User === null) return;
+    if (schoolName.length < 1 || User === null) return;
     const education: Education = {
-      school: schoolname,
+      school: schoolName,
       degree: degree,
       major: major,
       description: desc,
-      date_range: startdate + "," + enddate,
+      date_range: startDate + "," + endDate,
     };
     if (!User.education) {
       setUser({ ...User, education: [education] });
@@ -66,13 +65,13 @@ export default function CreateResume() {
     }
   };
   const setExp = () => {
-    if (jobtitle.length < 1 || User === null) return;
+    if (jobTitle.length < 1 || User === null) return;
     const experiences: UserExperience = {
-      title: jobtitle,
-      company: companyname,
+      title: jobTitle,
+      company: companyName,
       location: location,
-      description: jobdesc,
-      date_range: jobstartdate + "," + jobenddate,
+      description: jobDesc,
+      date_range: jobStartDate + "," + jobEndDate,
     };
     if (!User.experiences) {
       setUser({ ...User, experiences: [experiences] });
@@ -126,13 +125,13 @@ export default function CreateResume() {
 
             {reposWithCheck?.map((repo) => {
               return (
-                <Card key={repo.repo.name}>
+                <Card key={repo.name}>
                   <CardHeader>
-                    <h3>{repo.repo.name}</h3>
+                    <h3>{repo.name}</h3>
                   </CardHeader>
                   <Divider />
                   <CardBody>
-                    <p>{repo.repo.description}</p>
+                    <p>{repo.description}</p>
                   </CardBody>
                   <CardFooter>
                     <Checkbox
@@ -140,7 +139,7 @@ export default function CreateResume() {
                       onValueChange={(check) => {
                         setReposWithCheck(
                           reposWithCheck.map((r) => {
-                            if (r?.repo?.name === repo?.repo?.name) {
+                            if (r?.name === repo?.name) {
                               return { ...r, checked: check };
                             }
                             return r;
@@ -163,7 +162,7 @@ export default function CreateResume() {
             <Input
               placeholder="School"
               onChange={(e) => {
-                setschoolname(e.target.value);
+                setSchoolName(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
@@ -172,7 +171,7 @@ export default function CreateResume() {
             <Input
               placeholder="Degree"
               onChange={(e) => {
-                setdegree(e.target.value);
+                setDegree(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
@@ -181,17 +180,18 @@ export default function CreateResume() {
             <Input
               placeholder="Major"
               onChange={(e) => {
-                setmajor(e.target.value);
+                setMajor(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
               labelPlacement="outside"
             />
-            <div className="md:flex md:space-x-3">
+            <div className="md:flex gap-3">
               <Input
                 placeholder="Graduation start date"
+                type="date"
                 onChange={(e) => {
-                  setstartdate(e.target.value);
+                  setStartDate(e.target.value);
                 }}
                 // defaultValue={User?.education}
                 variant="faded"
@@ -199,8 +199,9 @@ export default function CreateResume() {
               />
               <Input
                 placeholder="Graduation end date"
+                type="date"
                 onChange={(e) => {
-                  setenddate(e.target.value);
+                  setEndDate(e.target.value);
                 }}
                 // defaultValue={User?.education}
                 variant="faded"
@@ -210,7 +211,7 @@ export default function CreateResume() {
             <Input
               placeholder="Description"
               onChange={(e) => {
-                setdesc(e.target.value);
+                setDesc(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
@@ -232,7 +233,7 @@ export default function CreateResume() {
             <Input
               placeholder="Title"
               onChange={(e) => {
-                setjobtitle(e.target.value);
+                setJobTitle(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
@@ -241,7 +242,7 @@ export default function CreateResume() {
             <Input
               placeholder="Company name"
               onChange={(e) => {
-                setcompanyname(e.target.value);
+                setCompanyName(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
@@ -250,17 +251,18 @@ export default function CreateResume() {
             <Input
               placeholder="Location"
               onChange={(e) => {
-                setlocation(e.target.value);
+                setLocation(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
               labelPlacement="outside"
             />
-            <div className="md:flex md:space-x-3">
+            <div className="md:flex gap-3">
               <Input
                 placeholder="Job start date"
+                type="date"
                 onChange={(e) => {
-                  setjobstartdate(e.target.value);
+                  setJobStartDate(e.target.value);
                 }}
                 // defaultValue={User?.education}
                 variant="faded"
@@ -268,8 +270,9 @@ export default function CreateResume() {
               />
               <Input
                 placeholder="Job end date"
+                type="date"
                 onChange={(e) => {
-                  setjobenddate(e.target.value);
+                  setJobEndDate(e.target.value);
                 }}
                 // defaultValue={User?.education}
                 variant="faded"
@@ -279,7 +282,7 @@ export default function CreateResume() {
             <Input
               placeholder="Job description"
               onChange={(e) => {
-                setjobdesc(e.target.value);
+                setJobDesc(e.target.value);
               }}
               // defaultValue={User?.education}
               variant="faded"
@@ -303,10 +306,10 @@ export default function CreateResume() {
                 return (
                   <Chip
                     onClose={() => {
-                      const filterskill = User.skills.filter(
+                      const filterSkill = User.skills.filter(
                         (item) => item !== c
                       );
-                      setUser({ ...User, skills: filterskill });
+                      setUser({ ...User, skills: filterSkill });
                     }}
                     key={ind}
                     size="lg"
@@ -319,9 +322,10 @@ export default function CreateResume() {
 
             <Input
               placeholder="Add skill and press enter"
+              value={skill}
               onChange={(e) => {
                 const val = e.target.value;
-                setskill(val);
+                setSkill(val);
               }}
               onKeyDown={(e) => {
                 if (!User) return;
@@ -330,11 +334,11 @@ export default function CreateResume() {
                 if (key.toString() === "Enter" && trimmedInput.length > 0) {
                   if (User?.skills) {
                     e.preventDefault();
-                    setskill((a) => "");
+                    setSkill((a) => "");
                     setUser({ ...User, skills: [...User.skills, skill] });
                   } else {
                     e.preventDefault();
-                    setskill((a) => "");
+                    setSkill((a) => "");
                     setUser({ ...User, skills: [skill] });
                   }
                 }
@@ -365,7 +369,10 @@ export default function CreateResume() {
               if (phase < 4) {
                 setPhase(phase + 1);
               } else {
+
                 console.log(reposWithCheck, User);
+                setRepos(reposWithCheck);
+                router.push("/resume");
               }
             }}
           >
@@ -373,19 +380,39 @@ export default function CreateResume() {
           </Button>
         </div>
         {phase === 2 && User && User?.education?.length > 0 && (
-          <div>
+          <div className="my-3 flex flex-col gap-3">
             {User.education.map((ed, ind) => {
-              return <h1 key={ind}>{ed.school}</h1>;
+              return <Card key={ind}>
+                <CardHeader>
+                  <h1>{ed.school}</h1>
+                </CardHeader>
+                <Divider />
+                <CardBody>
+                  <p>Degree : {ed.degree}</p>
+                  <p>Major: {ed.major}</p>
+                  <p>Date : {ed.date_range}</p>
+                  <p>Description : {ed.description}</p>
+                </CardBody>
+              </Card>
             })}
           </div>
         )}
         {phase === 3 && User && User?.experiences?.length > 0 && (
-          <div>
+          <div className="my-3 flex flex-col gap-3">
             {User.experiences.map((ed, ind) => {
               return (
-                <>
-                  <h1 key={ind}>{ed.title}</h1>
-                </>
+                <Card key={ind}>
+                  <CardHeader>
+                    <h1>{ed.title}</h1>
+                  </CardHeader>
+                  <Divider />
+                  <CardBody>
+                    <p>Company : {ed.company}</p>
+                    <p>Location: {ed.location}</p>
+                    <p>Date : {ed.date_range}</p>
+                    <p>Description : {ed.description}</p>
+                  </CardBody>
+                </Card>
               );
             })}
           </div>
