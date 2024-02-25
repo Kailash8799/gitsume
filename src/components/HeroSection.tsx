@@ -14,14 +14,11 @@ const HeroSection = () => {
       <div className="relative pt-36 ml-auto">
         <div className="lg:w-2/3 mb-20 text-center mx-auto">
           <h1 className="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">
-            Shaping a world with{" "}
-            <span className="text-primary dark:text-white">reimagination.</span>
+            Welcome to Gitsume
           </h1>
+          <p className="mt-8 text-xl text-gray-800 dark:text-gray-200">Crafting the perfect resume just got easier!</p>
           <p className="mt-8 text-gray-700 dark:text-gray-300">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio
-            incidunt nam itaque sed eius modi error totam sit illum. Voluptas
-            doloribus asperiores quaerat aperiam. Quidem harum omnis beatae
-            ipsum soluta!
+            Gitsume is a powerful online tool designed to help you create professional resumes that showcase your skills, experience, and achievements in the best possible light.
           </p>
           <div className="mt-16 flex flex-wrap justify-center gap-y-4 gap-x-6">
             <Link
@@ -32,7 +29,7 @@ const HeroSection = () => {
                 Create Resume
               </span>
             </Link>
-          
+
           </div>
           <div className="hidden py-8 mt-16 border-y border-gray-100 dark:border-gray-800 sm:flex justify-between">
             <div className="text-left">
@@ -55,7 +52,7 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-       
+
       </div>
     </div>
   );
