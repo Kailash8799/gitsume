@@ -186,7 +186,7 @@ export default function CreateResume() {
               variant="faded"
               labelPlacement="outside"
             />
-            <div className="md:flex gap-3">
+            <div className="flex max-md:flex-col gap-3">
               <Input
                 placeholder="Graduation start date"
                 type="date"
@@ -257,7 +257,7 @@ export default function CreateResume() {
               variant="faded"
               labelPlacement="outside"
             />
-            <div className="md:flex gap-3">
+            <div className="flex max-md:flex-col gap-3">
               <Input
                 placeholder="Job start date"
                 type="date"
