@@ -1,76 +1,97 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "./_components/Container";
-import { Input, Spinner } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Divider, Input, Spinner } from "@nextui-org/react";
 import { fetchUserDataFromGitHub, fetchUserRepositories } from "@/lib/github";
+import useMyStore from "@/utils/context";
+import { useRouter } from "next/navigation";
 
 export default function CreateResume() {
-  const [githubuserfetching, setgithubuserfetching] = useState(false);
-  const [gitusername, setgitsername] = useState("");
-  // get information from the user and call github api and get data
-  // call open ai api and get resume details
-  // set resume data to the store
-  // redirect to resume page
+  const User = useMyStore((state) => state.user);
+  const Repos = useMyStore((state) => state.repos);
+  const [phase, setPhase] = useState(1)
+  const [reposWithCheck, setReposWithCheck] = useState(Repos.map((repo) => ({ repo, checked: false })))
 
-  const fetchGitHubInfo = async () => {
-    if (gitusername.length < 1) {
-      return;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!User) {
+      router.push("/");
     }
-    setgithubuserfetching(true);
-    try {
-    //   await new Promise((resolve, reject) => {
-    //     setTimeout(resolve, 5000);
-    //   });
-      const userProfile = await fetchUserDataFromGitHub(gitusername);
-      const userRepositories = await fetchUserRepositories(gitusername);
-    //   if(userProfile === null || userRepositories === null){
-    //     throw new Error("Some error occured! while fetching github information");
-    //   }
-      console.log(userProfile);
-      console.log(userRepositories);
-    } catch (error) {
-      console.log("Error",error);
-    }
-    setgithubuserfetching(false);
-  };
+  }, [User, router]);
 
   return (
     <>
       <Container>
-        <div className="mx-4 sm:mx-0">
-          <div className="mt-16 flex flex-wrap justify-center gap-y-4">
-            <div className="flex justify-center w-full flex-wrap md:flex-nowrap gap-4">
-              <div className="bg-neutral-600/50 flex items-center justify-start px-5 py-4 rounded-lg">
-                <p>https://github.com/</p>
-                <input
-                  className="bg-transparent min-w-5 placeholder:text-opacity-40 placeholder:text-gray-300 dark:bg-transparent hover:bg-none focus:outline-none border-0"
-                  type="text"
-                  value={gitusername}
-                  placeholder="username"
-                  onChange={(e) => {
-                    setgitsername(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
+        {phase === 1 && (
+          <div className="flex flex-col gap-3 my-3">
+
+            <Card>
+              <CardHeader>
+                <h1>{User?.name}</h1>
+              </CardHeader>
+              <CardBody className="flex flex-col gap-3">
+                <Input placeholder="Summary" defaultValue={User?.bio} variant="faded" labelPlacement="outside" />
+                <Input placeholder="Email" defaultValue={User?.email} variant="faded" labelPlacement="outside" />
+                <Input placeholder="location" defaultValue={User?.location} variant="faded" labelPlacement="outside" />
+              </CardBody>
+            </Card>
+
+            {reposWithCheck.map((repo) => {
+              return (<Card key={repo.repo.name} >
+                <CardHeader>
+                  <h3>{repo.repo.name}</h3>
+                </CardHeader>
+                <Divider />
+                <CardBody>
+                  <p>{repo.repo.description}</p>
+                </CardBody>
+                <CardFooter>
+                  <Checkbox isSelected={repo.checked} onValueChange={(check) => {
+                    setReposWithCheck(reposWithCheck.map((r) => {
+                      if (r.repo.name === repo.repo.name) {
+                        return { ...r, checked: check }
+                      }
+                      return r
+                    }))
+                  }}>Take it in Resume?</Checkbox>
+                </CardFooter>
+              </Card>)
+            })}
           </div>
-          <div className="mt-16 flex flex-wrap justify-center gap-y-4 gap-x-6">
-            {githubuserfetching ? (
-              <Spinner size="lg" />
-            ) : (
-              <div
-                onClick={fetchGitHubInfo}
-                className="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-              >
-                <button
-                  disabled={githubuserfetching}
-                  className="relative text-base font-semibold text-white"
-                >
-                  Create Resume
-                </button>
-              </div>
-            )}
+        )}
+
+        {phase === 2 && (
+          <div className="flex flex-col gap-3 my-3">
+            <h1 className="text-3xl">Education</h1>
+            <Input placeholder="School" variant="faded" labelPlacement="outside" />
           </div>
+        )}
+        {phase === 3 && (
+          <div className="flex flex-col gap-3 my-3">
+            <h1>Experience</h1>
+          </div>
+        )}
+        {phase === 4 && (
+          <div className="flex flex-col gap-3 my-3">
+            <h1>Skills</h1>
+          </div>
+        )}
+        <div className="flex gap-3">
+          <Button className="flex-1" color="primary" variant="solid" disabled={phase === 1} onClick={() => {
+            setPhase(phase - 1)
+          }}>
+            Back
+          </Button>
+          <Button className="flex-1" color="primary" variant="solid" onClick={() => {
+            if (phase < 4) {
+              setPhase(phase + 1)
+            } else {
+              console.log(reposWithCheck, User);
+            }
+          }}>
+            {phase === 4 ? "Create Resume" : "Next"}
+          </Button>
         </div>
       </Container>
     </>
