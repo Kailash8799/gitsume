@@ -15,7 +15,7 @@ export default function Nav() {
 
     return (
         <>
-            <div className="flex justify-center py-3 sticky top-0 z-50 items-center text-center backdrop-blur-lg bg-neutral-300/60 dark:bg-gray-950/60">
+            <div id="navbar" className="flex justify-center py-3 sticky top-0 z-50 items-center text-center backdrop-blur-lg bg-neutral-300/60 dark:bg-gray-950/60">
                 <h1 className="text-4xl ">Gitsume</h1>
             </div>
         </>
