@@ -54,5 +54,5 @@ npm run dev
 ## Contributors
 
 <a href="https://github.com/Nilesh9106/gitsume/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Nilesh9106/gitsume" />
+  <img src="https://contrib.rocks/image?repo=kailash8799/gitsume" />
 </a>

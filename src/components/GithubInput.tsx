@@ -48,8 +48,7 @@ export default function GithubInput() {
         try {
             const userProfile = await fetchUserDataFromGitHub(gitUsername);
             const userRepositories = await fetchUserRepositories(gitUsername);
-            console.log(userProfile);
-            console.log(userRepositories);
+            // console.log(userProfile);
             setUser(userProfile!);
             setRepos(userRepositories!);
             router.push('/create')
