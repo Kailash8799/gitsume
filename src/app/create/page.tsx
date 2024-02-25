@@ -370,6 +370,27 @@ export default function CreateResume() {
                 setPhase(phase + 1);
               } else {
 
+                if (!User?.skills || User.skills.length == 0) {
+                  alert("Add some skills");
+                  setPhase(4);
+                  return;
+                }
+                if (!User?.education || User.education.length == 0) {
+                  alert("Add some education");
+                  setPhase(2);
+                  return;
+                }
+                if (reposWithCheck.filter((r) => r.checked).length < 2) {
+                  alert("Select at least 2 repos");
+                  setPhase(1);
+                  return;
+                }
+                if (!User.email) {
+                  alert("Add email");
+                  setPhase(1);
+                  return;
+                }
+
                 console.log(reposWithCheck, User);
                 setRepos(reposWithCheck);
                 router.push("/resume");
